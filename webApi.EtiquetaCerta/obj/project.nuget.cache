@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "etlthTaH46+XyoKEVnUIXg6PV4Iwm7rTjM4dA2o7ROEn3W5+mI5ukWg/DK9+6OIUq34cO+tSeAJfBiziYrHm8w==",
+  "dgSpecHash": "gRYNBqLL5O0bqRnnFz7H/NsddVgwKRJREwEr7suVXPimz2JmnRBMqVpgr5VblDtPOA2dDSby8g1CTySrt7ty3w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\52546124870\\Desktop\\Introducao\\webApi.EtiquetaCerta\\webApi.EtiquetaCerta.csproj",
+  "projectFilePath": "C:\\Users\\52546124870\\Desktop\\EtiquetaCerta\\webApi.EtiquetaCerta\\webApi.EtiquetaCerta.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\52546124870\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\52546124870\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

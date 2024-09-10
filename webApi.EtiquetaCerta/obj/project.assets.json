@@ -4529,11 +4529,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\52546124870\\Desktop\\Introducao\\webApi.EtiquetaCerta\\webApi.EtiquetaCerta.csproj",
+      "projectUniqueName": "C:\\Users\\52546124870\\Desktop\\EtiquetaCerta\\webApi.EtiquetaCerta\\webApi.EtiquetaCerta.csproj",
       "projectName": "webApi.EtiquetaCerta",
-      "projectPath": "C:\\Users\\52546124870\\Desktop\\Introducao\\webApi.EtiquetaCerta\\webApi.EtiquetaCerta.csproj",
+      "projectPath": "C:\\Users\\52546124870\\Desktop\\EtiquetaCerta\\webApi.EtiquetaCerta\\webApi.EtiquetaCerta.csproj",
       "packagesPath": "C:\\Users\\52546124870\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\52546124870\\Desktop\\Introducao\\webApi.EtiquetaCerta\\obj\\",
+      "outputPath": "C:\\Users\\52546124870\\Desktop\\EtiquetaCerta\\webApi.EtiquetaCerta\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\52546124870\\AppData\\Roaming\\NuGet\\NuGet.Config",
