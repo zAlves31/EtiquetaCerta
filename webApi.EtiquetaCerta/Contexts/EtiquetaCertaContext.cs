@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using webApi.EtiquetaCerta.Domains;
 
-namespace webApi.EtiquetaCerta.Domains;
+namespace webApi.EtiquetaCerta.Contexts;
 
 public partial class EtiquetaCertaContext : DbContext
 {
