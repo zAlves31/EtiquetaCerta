@@ -1,21 +1,28 @@
 using Microsoft.EntityFrameworkCore;
 using webApi.EtiquetaCerta.Contexts;
+using webApi.EtiquetaCerta.Interfaces;
+using webApi.EtiquetaCerta.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Configurar Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<EtiquetaCertaContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=DESKTOP-O595EET; Initial Catalog=Voluntee; User Id = sa; Password = Senai@134; TrustServerCertificate=true;")));
 
+// Configurar DbContext com a string de conexão do appsettings.json
+builder.Services.AddDbContext<EtiquetaCertaContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-O595EET;database=EtiquetaCerta;user id=sa; Pwd=Senai@134;Trustservercertificate=true")));
+
+// Configurar Repositórios
+builder.Services.AddScoped<ILegislationRepository, LegislationRepository>();
+builder.Services.AddScoped<ISymbologyRepository, SymbologyRepository>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure o pipeline de requisições HTTP.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -23,9 +30,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

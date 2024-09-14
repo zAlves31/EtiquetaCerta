@@ -1,23 +1,18 @@
 ﻿namespace webApi.EtiquetaCerta.Dtos
 {
 
-    public class LegislationPostDto
+    public class LegislationRequest
     {
         public string Name { get; set; }
         public string OfficialLanguage { get; set; }
-        public List<ConservationProcessPostDto> ConservationProcesses { get; set; }
+        public List<ProcessRequest> ConservationProcesses { get; set; }
     }
 
-    public class ConservationProcessPostDto
+    public class ProcessRequest
     {
-        public Guid IdProcess { get; set; }
-        public List<SymbologyPostDto> Symbologies { get; set; }
+        public Guid ProcessId { get; set; }  // ID do processo já existente no banco
+        public List<Guid> SymbologyIds { get; set; }  // Lista de IDs das simbologias
     }
 
-    public class SymbologyPostDto
-    {
-        public Guid Id { get; set; }
-        public string Translate { get; set; }  // Correspondente à propriedade Translate
-    }
 
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using webApi.EtiquetaCerta.Contexts;
 using webApi.EtiquetaCerta.Domains;
 using webApi.EtiquetaCerta.Interfaces;
 
@@ -6,9 +7,9 @@ namespace webApi.EtiquetaCerta.Repositories
 {
     public class LegislationRepository : ILegislationRepository
     {
-        private readonly DbContext _context;
+        private readonly EtiquetaCertaContext _context; // Use o contexto específico
 
-        public LegislationRepository(DbContext context)
+        public LegislationRepository(EtiquetaCertaContext context)
         {
             _context = context;
         }
@@ -28,23 +29,17 @@ namespace webApi.EtiquetaCerta.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task AddLegislationAsync(Legislation legislation)
+        public async Task<ConservationProcess> GetByIdAsync(Guid id)
         {
-            _context.Add(legislation);
+            return await _context.ConservationProcesses
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task AddAsync(Legislation legislation)
+        {
+            _context.Legislations.Add(legislation); // Adicionando a legislação
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<ConservationProcess> GetConservationProcessByIdAsync(Guid processId)
-        {
-            return await _context.Set<ConservationProcess>()
-                .Include(p => p.Symbologies)
-                .FirstOrDefaultAsync(p => p.Id == processId);
-        }
-
-        public async Task<Symbology> GetSymbologyByIdAsync(Guid symbologyId)
-        {
-            return await _context.Set<Symbology>()
-                .FirstOrDefaultAsync(s => s.Id == symbologyId);
         }
     }
 }

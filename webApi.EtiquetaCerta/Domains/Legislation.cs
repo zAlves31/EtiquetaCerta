@@ -19,7 +19,5 @@ public partial class Legislation
 
     public virtual ICollection<ProcessInLegislation> ProcessInLegislations { get; set; } = new List<ProcessInLegislation>();
 
-    public virtual ICollection<ConservationProcess> ConservationProcesses { get; set; } = new List<ConservationProcess>();
-
     public virtual ICollection<SymbologyTranslate> SymbologyTranslates { get; set; } = new List<SymbologyTranslate>();
 }

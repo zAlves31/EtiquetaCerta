@@ -4,9 +4,10 @@ namespace webApi.EtiquetaCerta.Interfaces
 {
     public interface ILegislationRepository
     {
-        Task AddLegislationAsync(Legislation legislation);
-        Task<ConservationProcess> GetConservationProcessByIdAsync(Guid processId);
-        Task<Symbology> GetSymbologyByIdAsync(Guid symbologyId);
+
+        Task<ConservationProcess?> GetByIdAsync(Guid id);
+
+        Task AddAsync(Legislation legislation);
 
         public List<Legislation> List();
 
