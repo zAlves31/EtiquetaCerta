@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("webApi.EtiquetaCerta")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dfba21d5fc09b3a4dacefdc514453e8750768fe3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8972bc62086f5cb57311be0331e431cec4dd40a")]
 [assembly: System.Reflection.AssemblyProductAttribute("webApi.EtiquetaCerta")]
 [assembly: System.Reflection.AssemblyTitleAttribute("webApi.EtiquetaCerta")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

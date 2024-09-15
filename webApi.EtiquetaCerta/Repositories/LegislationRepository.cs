@@ -7,38 +7,50 @@ namespace webApi.EtiquetaCerta.Repositories
 {
     public class LegislationRepository : ILegislationRepository
     {
-        private readonly EtiquetaCertaContext _context; // Use o contexto específico
+        private readonly EtiquetaCertaContext _context;
 
         public LegislationRepository(EtiquetaCertaContext context)
         {
             _context = context;
         }
 
-        public List<Legislation> List()
+        public async Task<List<Legislation>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Legislations
+                .Include(l => l.ProcessInLegislations)
+                    .ThenInclude(pil => pil.IdProcessNavigation) // Carregar o processo de conservação
+                .Include(l => l.SymbologyTranslates)
+                    .ThenInclude(st => st.IdSymbologyNavigation) // Carregar a simbologia
+                .ToListAsync();
         }
 
-        public void Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = await _context.Legislations.FindAsync(id);
+            if (entity != null)
+            {
+                _context.Legislations.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
         }
+
 
         public void Update(Legislation legislation)
         {
-            throw new NotImplementedException();
+            _context.Legislations.Update(legislation); // Atualiza a legislação
+            _context.SaveChanges(); // Salva as alterações
         }
 
         public async Task<ConservationProcess> GetByIdAsync(Guid id)
         {
             return await _context.ConservationProcesses
-                .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .FirstOrDefaultAsync(cp => cp.Id == id);
         }
+
 
         public async Task AddAsync(Legislation legislation)
         {
-            _context.Legislations.Add(legislation); // Adicionando a legislação
+            await _context.Legislations.AddAsync(legislation);
             await _context.SaveChangesAsync();
         }
     }

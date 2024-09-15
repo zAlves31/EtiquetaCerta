@@ -1,30 +1,46 @@
-﻿namespace webApi.EtiquetaCerta.Dtos
+﻿using Newtonsoft.Json;
+
+public class LegislationDto
 {
-    public class SymbologyDto
-    {
-        public Guid Id { get; set; }
-        public string Translate { get; set; }
-    }
+    [JsonProperty("id")]
+    public Guid Id { get; set; }
 
-    public class ConservationProcessDto
-    {
-        public Guid IdProcess { get; set; }
-        public List<SymbologyDto> Symbology { get; set; }
-    }
+    [JsonProperty("name")]
+    public string? Name { get; set; }
 
-    public class LegislationResponseDto
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string OfficialLanguage { get; set; }
-        public List<ConservationProcessDto> ConservationProcess { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-    }
+    [JsonProperty("official_language")]
+    public string? OfficialLanguage { get; set; }
 
-    public class GetLegislationsResponseDto
-    {
-        public List<LegislationResponseDto> Legislations { get; set; }
-    }
+    [JsonProperty("conservation_process")]
+    public List<ConservationProcessDto> ConservationProcess { get; set; } = new List<ConservationProcessDto>();
 
+    [JsonProperty("created_at")]
+    public DateTime? CreatedAt { get; set; }
+
+    [JsonProperty("updated_at")]
+    public DateTime? UpdatedAt { get; set; }
+}
+
+public class ConservationProcessDto
+{
+    [JsonProperty("id_process")]
+    public Guid IdProcess { get; set; }
+
+    [JsonProperty("symbology")]
+    public List<SymbologyDto> Symbology { get; set; } = new List<SymbologyDto>();
+}
+
+public class SymbologyDto
+{
+    [JsonProperty("id")]
+    public Guid Id { get; set; }
+
+    [JsonProperty("translate")]
+    public string? Translate { get; set; }
+}
+
+public class LegislationResponseDto
+{
+    [JsonProperty("legislations")]
+    public List<LegislationDto> Legislations { get; set; } = new List<LegislationDto>();
 }

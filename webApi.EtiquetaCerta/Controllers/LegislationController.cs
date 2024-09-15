@@ -2,63 +2,178 @@
 using webApi.EtiquetaCerta.Domains;
 using webApi.EtiquetaCerta.Dtos;
 using webApi.EtiquetaCerta.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 [ApiController]
 [Route("api/[controller]")]
 public class LegislationController : ControllerBase
 {
     private readonly ILegislationRepository _legislationRepository;
+    private readonly IConservationProcessRepository _conservationProcessRepository;
     private readonly ISymbologyRepository _symbologyRepository;
+    private readonly IProcessInLegislationRepository _processInLegislationRepository;
+    private readonly ISymbologyTranslateRepository _symbologyTranslateRepository;
 
-    public LegislationController(ILegislationRepository legislationRepository, ISymbologyRepository symbologyRepository)
+    public LegislationController(
+        ILegislationRepository legislationRepository,
+        IConservationProcessRepository conservationProcessRepository,
+        ISymbologyRepository symbologyRepository,
+        IProcessInLegislationRepository processInLegislationRepository,
+        ISymbologyTranslateRepository symbologyTranslateRepository)
     {
         _legislationRepository = legislationRepository;
+        _conservationProcessRepository = conservationProcessRepository;
         _symbologyRepository = symbologyRepository;
+        _processInLegislationRepository = processInLegislationRepository;
+        _symbologyTranslateRepository = symbologyTranslateRepository;
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateLegislation([FromBody] LegislationRequest request)
     {
-        // Validação se os processos e simbologias existem e estão vinculados corretamente
-        foreach (var processRequest in request.ConservationProcesses)
+        try
         {
-            var process = await _legislationRepository.GetByIdAsync(processRequest.ProcessId);
-
-            if (process == null)
+            // Criar nova legislação
+            var legislation = new Legislation
             {
-                return BadRequest($"Processo de conservação com ID {processRequest.ProcessId} não foi encontrado.");
-            }
+                Id = Guid.NewGuid(),
+                Name = request.Name,
+                OfficialLanguage = request.OfficialLanguage,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
 
-            foreach (var symbologyId in processRequest.SymbologyIds)
+            // Adicionar legislação ao banco de dados usando o repositório
+            await _legislationRepository.AddAsync(legislation);
+
+            // Adicionar associações de processos de conservação
+            foreach (var processRequest in request.ConservationProcesses)
             {
-                var symbology = await _symbologyRepository.GetByIdAsync(symbologyId); // Usando o repositório de Symbology
+                // Verifica se o processo de conservação existe
+                var process = await _conservationProcessRepository.GetByIdAsync(processRequest.IdProcess);
 
-                if (symbology == null)
+                if (process == null)
                 {
-                    return BadRequest($"Simbologia com ID {symbologyId} não foi encontrada.");
+                    return BadRequest($"Processo de conservação com ID {processRequest.IdProcess} não foi encontrado.");
                 }
 
-                if (symbology.IdProcess != process.Id)
+                // Adicionar associação à tabela ProcessInLegislation
+                var processInLegislation = new ProcessInLegislation
                 {
-                    return BadRequest($"A simbologia '{symbology.Name}' pertence ao processo '{symbology.IdProcessNavigation.Name}' e não pode ser associada ao processo '{process.Name}'.");
+                    Id = Guid.NewGuid(),
+                    IdProcess = process.Id,
+                    IdLegislation = legislation.Id
+                };
+
+                await _processInLegislationRepository.AddAsync(processInLegislation);
+
+                // Valida e associa as simbologias
+                foreach (var symbologyRequest in processRequest.Symbology)
+                {
+                    var symbology = await _symbologyRepository.GetByIdAsync(symbologyRequest.Id);
+
+                    if (symbology == null)
+                    {
+                        return BadRequest($"Simbologia com ID {symbologyRequest.Id} não foi encontrada.");
+                    }
+
+                    if (symbology.IdProcess != process.Id)
+                    {
+                        return BadRequest($"A simbologia '{symbologyRequest.Name}' pertence ao processo '{symbology.IdProcessNavigation?.Name}' e não pode ser associada ao processo '{process.Name}'.");
+                    }
+
+                    var symbologyTranslate = new SymbologyTranslate
+                    {
+                        Id = Guid.NewGuid(),
+                        IdSymbology = symbology.Id,
+                        IdLegislation = legislation.Id,
+                        SymbologyTranslate1 = symbologyRequest.Name
+                    };
+
+                    await _symbologyTranslateRepository.AddAsync(symbologyTranslate);
                 }
             }
+
+            // Retornar a legislação criada como resposta
+            return Ok(legislation);
         }
-
-        // Criar nova legislação
-        var legislation = new Legislation
+        catch (Exception ex)
         {
-            Id = Guid.NewGuid(),
-            Name = request.Name,
-            OfficialLanguage = request.OfficialLanguage,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
-        };
+            // Log para erro
+            Console.WriteLine($"Erro ao criar legislação: {ex.Message}");
+            return StatusCode(500, "Erro interno do servidor");
+        }
+    }
 
-        // Adicionar legislação ao banco de dados usando o repositório
-        await _legislationRepository.AddAsync(legislation);
 
-        return Ok(legislation);
+    [HttpGet]
+    public async Task<ActionResult<LegislationResponseDto>> GetLegislations()
+    {
+        try
+        {
+            // Obtenha as legislações do repositório
+            var legislations = await _legislationRepository.ListAsync();
+
+            // Mapeie para DTOs
+            var legislationDtos = legislations.Select(l => new LegislationDto
+            {
+                Id = l.Id,
+                Name = l.Name,
+                OfficialLanguage = l.OfficialLanguage,
+                ConservationProcess = l.ProcessInLegislations.Select(cp => new ConservationProcessDto
+                {
+                    IdProcess = cp.IdProcess ?? Guid.Empty,
+                    Symbology = l.SymbologyTranslates
+                        .Where(st => st.IdSymbologyNavigation != null && st.IdSymbologyNavigation.IdProcess == cp.IdProcess)
+                        .Select(st => new SymbologyDto
+                        {
+                            Id = st.Id,
+                            Translate = st.SymbologyTranslate1
+                        }).ToList()
+                }).ToList(),
+                CreatedAt = l.CreatedAt,
+                UpdatedAt = l.UpdatedAt
+            }).ToList();
+
+            return Ok(new LegislationResponseDto { Legislations = legislationDtos });
+        }
+        catch (Exception ex)
+        {
+            // Log para erro
+            Console.WriteLine($"Erro ao obter legislações: {ex.Message}");
+            return StatusCode(500, "Erro interno do servidor");
+        }
+    }
+
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteLegislation(Guid id)
+    {
+        try
+        {
+            // Verifica se a legislação existe
+            var legislation = await _legislationRepository.GetByIdAsync(id);
+            if (legislation == null)
+            {
+                // Adicionando logging para debugging
+                Console.WriteLine($"Legislação com ID {id} não foi encontrada.");
+                return NotFound($"Legislação com ID {id} não foi encontrada.");
+            }
+
+            // Remove a legislação
+            await _legislationRepository.DeleteAsync(id); // Chama o método DeleteAsync
+
+            return NoContent(); // Retorna 204 No Content se a exclusão for bem-sucedida
+        }
+        catch (Exception ex)
+        {
+            // Logging para erro de exclusão
+            Console.WriteLine($"Erro ao excluir legislação com ID {id}: {ex.Message}");
+            return StatusCode(500, "Erro ao excluir legislação.");
+        }
     }
 
 

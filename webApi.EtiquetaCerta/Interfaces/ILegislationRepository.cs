@@ -4,17 +4,14 @@ namespace webApi.EtiquetaCerta.Interfaces
 {
     public interface ILegislationRepository
     {
-
-        Task<ConservationProcess?> GetByIdAsync(Guid id);
+        Task<ConservationProcess?> GetByIdAsync(Guid id); 
 
         Task AddAsync(Legislation legislation);
 
-        public List<Legislation> List();
+        Task<List<Legislation>> ListAsync();
 
-        public void Update(Legislation legislation);
+        void Update(Legislation legislation);
 
-        public void Delete(Guid id);
-
-
+        Task DeleteAsync(Guid id);
     }
 }

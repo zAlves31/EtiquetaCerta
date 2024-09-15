@@ -5,7 +5,19 @@
     {
         public string Name { get; set; }
         public string OfficialLanguage { get; set; }
-        public List<ProcessRequest> ConservationProcesses { get; set; }
+        public List<ConservationProcessRequest> ConservationProcesses { get; set; }
+    }
+
+    public class ConservationProcessRequest
+    {
+        public Guid IdProcess { get; set; }
+        public List<SymbologyRequest> Symbology { get; set; }
+    }
+
+    public class SymbologyRequest
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
     }
 
     public class ProcessRequest
