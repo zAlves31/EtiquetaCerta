@@ -2,10 +2,6 @@
 using webApi.EtiquetaCerta.Domains;
 using webApi.EtiquetaCerta.Dtos;
 using webApi.EtiquetaCerta.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -148,33 +144,40 @@ public class LegislationController : ControllerBase
         }
     }
 
+    //[HttpDelete("{id}")]
+    //public async Task<IActionResult> DeleteLegislation(Guid id)
+    //{
+    //    try
+    //    {
+    //        // Verifica se a legislação existe
+    //        var legislation = await _legislationRepository.GetByIdAsync(id);
+    //        if (legislation == null)
+    //        {
+    //            // Adicionando logging para debugging
+    //            Console.WriteLine($"Legislação com ID {id} não foi encontrada.");
+    //            return NotFound($"Legislação com ID {id} não foi encontrada.");
+    //        }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteLegislation(Guid id)
-    {
-        try
-        {
-            // Verifica se a legislação existe
-            var legislation = await _legislationRepository.GetByIdAsync(id);
-            if (legislation == null)
-            {
-                // Adicionando logging para debugging
-                Console.WriteLine($"Legislação com ID {id} não foi encontrada.");
-                return NotFound($"Legislação com ID {id} não foi encontrada.");
-            }
+    //        // Remove as referências da tabela ProcessInLegislation
+    //        await _processInLegislationRepository.DeleteByLegislationIdAsync(id);
 
-            // Remove a legislação
-            await _legislationRepository.DeleteAsync(id); // Chama o método DeleteAsync
+    //        // Remove as referências da tabela SymbologyTranslate
+    //        await _symbologyTranslateRepository.DeleteByLegislationIdAsync(id);
 
-            return NoContent(); // Retorna 204 No Content se a exclusão for bem-sucedida
-        }
-        catch (Exception ex)
-        {
-            // Logging para erro de exclusão
-            Console.WriteLine($"Erro ao excluir legislação com ID {id}: {ex.Message}");
-            return StatusCode(500, "Erro ao excluir legislação.");
-        }
-    }
+    //        // Remove a legislação da tabela principal
+    //        await _legislationRepository.DeleteAsync(id);
+
+    //        return NoContent(); // Retorna 204 No Content se a exclusão for bem-sucedida
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        // Logging para erro de exclusão
+    //        Console.WriteLine($"Erro ao excluir legislação com ID {id}: {ex.Message}");
+    //        return StatusCode(500, "Erro ao excluir legislação.");
+    //    }
+    //}
+
+
 
 
 }

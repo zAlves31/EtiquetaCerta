@@ -31,6 +31,9 @@ builder.Services.AddScoped<ISymbologyRepository, SymbologyRepository>();
 builder.Services.AddScoped<IProcessInLegislationRepository, ProcessInLegislationRepository>();
 builder.Services.AddScoped<ISymbologyTranslateRepository, SymbologyTranslateRepository>();
 builder.Services.AddScoped<IConservationProcessRepository, ConservationProcessRepository>();
+builder.Services.AddScoped<ILabelRepository, LabelRepository>();
+builder.Services.AddScoped<ILegislationRepository, LegislationRepository>();
+
 
 // Configurar CORS se necessário
 builder.Services.AddCors(options =>

@@ -5,5 +5,7 @@ namespace webApi.EtiquetaCerta.Interfaces
     public interface ISymbologyRepository
     {
         Task<Symbology?> GetByIdAsync(Guid id);
+
+        Task DeleteByLegislationIdAsync(Guid legislationId);
     }
 }

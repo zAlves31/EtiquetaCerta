@@ -4,10 +4,8 @@ namespace webApi.EtiquetaCerta.Interfaces
 {
     public interface ILabelRepository
     {
-        public void Register(Label label);
+        Task AddAsync(Label label);
 
-        public List<Label> List();
-
-        public Label GetById(Guid id);
+        Task<Legislation?> GetByIdAsync(Guid id);
     }
 }

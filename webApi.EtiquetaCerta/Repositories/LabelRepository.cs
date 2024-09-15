@@ -1,24 +1,30 @@
-﻿using webApi.EtiquetaCerta.Domains;
+﻿using Microsoft.EntityFrameworkCore;
+using webApi.EtiquetaCerta.Contexts;
+using webApi.EtiquetaCerta.Domains;
 using webApi.EtiquetaCerta.Interfaces;
 
 namespace webApi.EtiquetaCerta.Repositories
 {
     public class LabelRepository : ILabelRepository
     {
-        public void Register(Label label)
+        private readonly EtiquetaCertaContext _context;
+
+        public LabelRepository(EtiquetaCertaContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public List<Label> List()
+        public async Task AddAsync(Label label)
         {
-            throw new NotImplementedException();
+            _context.Labels.Add(label);
+            await _context.SaveChangesAsync();
         }
 
-        public Label GetById(Guid id)
+        public async Task<Legislation> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Legislations
+                .FirstOrDefaultAsync(l => l.Id == id);
         }
-       
+
     }
 }

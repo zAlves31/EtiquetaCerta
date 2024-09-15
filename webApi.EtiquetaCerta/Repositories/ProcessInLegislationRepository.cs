@@ -19,5 +19,19 @@ namespace webApi.EtiquetaCerta.Repositories
             await _context.ProcessInLegislations.AddAsync(processInLegislation);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteByLegislationIdAsync(Guid legislationId)
+        {
+            var items = _context.ProcessInLegislations.Where(p => p.IdLegislation == legislationId);
+            _context.ProcessInLegislations.RemoveRange(items);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ProcessInLegislation>> GetByLegislationIdAsync(Guid legislationId)
+        {
+            return await _context.Set<ProcessInLegislation>()
+                .Where(p => p.IdLegislation == legislationId)
+                .ToListAsync();
+        }
     }
 }
