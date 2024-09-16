@@ -20,12 +20,5 @@ namespace webApi.EtiquetaCerta.Repositories
                 .Include(s => s.IdProcessNavigation) 
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
-
-        public async Task DeleteByLegislationIdAsync(Guid legislationId)
-        {
-            var items = _context.SymbologyTranslates.Where(s => s.IdLegislation == legislationId);
-            _context.SymbologyTranslates.RemoveRange(items);
-            await _context.SaveChangesAsync();
-        }
     }
 }

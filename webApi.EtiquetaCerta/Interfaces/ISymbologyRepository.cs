@@ -6,6 +6,5 @@ namespace webApi.EtiquetaCerta.Interfaces
     {
         Task<Symbology?> GetByIdAsync(Guid id);
 
-        Task DeleteByLegislationIdAsync(Guid legislationId);
     }
 }

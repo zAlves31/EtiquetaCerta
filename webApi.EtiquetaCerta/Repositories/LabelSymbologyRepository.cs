@@ -32,12 +32,5 @@ namespace webApi.EtiquetaCerta.Repositories
             await _context.SaveChangesAsync();
         }
 
-        // Obtém todas as simbologias associadas a uma etiqueta
-        public async Task<List<LabelSymbology>> GetByLabelIdAsync(Guid labelId)
-        {
-            return await _context.LabelSymbologies
-                .Where(ls => ls.IdLabel == labelId)
-                .ToListAsync();
-        }
     }
 }

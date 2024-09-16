@@ -8,8 +8,6 @@ namespace webApi.EtiquetaCerta.Interfaces
     {
         Task AddAsync(ProcessInLegislation processInLegislation);
 
-        Task DeleteByLegislationIdAsync(Guid legislationId);
-
         Task<IEnumerable<ProcessInLegislation>> GetByLegislationIdAsync(Guid legislationId); 
     }
 }

@@ -24,29 +24,6 @@ namespace webApi.EtiquetaCerta.Repositories
                 .ToListAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
-        {
-            var entity = await _context.Legislations.FindAsync(id);
-            if (entity != null)
-            {
-                _context.Legislations.Remove(entity);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-
-        public void Update(Legislation legislation)
-        {
-            _context.Legislations.Update(legislation); // Atualiza a legislação
-            _context.SaveChanges(); // Salva as alterações
-        }
-
-        public async Task<ConservationProcess> GetByIdAsync(Guid id)
-        {
-            return await _context.ConservationProcesses
-                .FirstOrDefaultAsync(cp => cp.Id == id);
-        }
-
 
         public async Task AddAsync(Legislation legislation)
         {
