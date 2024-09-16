@@ -414,3 +414,7 @@ C:\Users\José\Desktop\EtiquetaCerta\webApi.EtiquetaCerta\bin\Debug\net8.0\Micro
 C:\Users\José\Desktop\EtiquetaCerta\webApi.EtiquetaCerta\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\José\Desktop\EtiquetaCerta\webApi.EtiquetaCerta\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\José\Desktop\EtiquetaCerta\webApi.EtiquetaCerta\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+C:\Users\52546124870\Desktop\EtiquetaCerta\webApi.EtiquetaCerta\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\52546124870\Desktop\EtiquetaCerta\webApi.EtiquetaCerta\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\52546124870\Desktop\EtiquetaCerta\webApi.EtiquetaCerta\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\52546124870\Desktop\EtiquetaCerta\webApi.EtiquetaCerta\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll

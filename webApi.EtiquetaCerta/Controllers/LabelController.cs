@@ -36,7 +36,7 @@ namespace webApi.EtiquetaCerta.Controllers
             try
             {
                 // Verifica se a legislação existe
-                var legislation = await _legislationRepository.GetByIdAsync(request.IdLegislation);
+                var legislation = await _labelRepository.GetByIdAsync(request.IdLegislation);
                 if (legislation == null)
                 {
                     return NotFound($"Legislação com ID {request.IdLegislation} não foi encontrada.");
@@ -80,7 +80,7 @@ namespace webApi.EtiquetaCerta.Controllers
                 }
 
                 // Obtém a legislação associada à etiqueta
-                var legislation = await _labelRepository.GetByIdAsync(label.IdLegislation.Value);
+                var legislation = await _labelRepository.GetByIdAsync(id);
                 ;
                 if (legislation == null)
                 {
