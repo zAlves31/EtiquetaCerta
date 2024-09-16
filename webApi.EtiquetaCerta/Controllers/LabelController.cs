@@ -48,8 +48,8 @@ namespace webApi.EtiquetaCerta.Controllers
                     Id = Guid.NewGuid(),
                     Name = request.Name,
                     IdLegislation = request.IdLegislation, // Referência à legislação
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
                 };
 
                 // Adiciona a etiqueta ao banco de dados

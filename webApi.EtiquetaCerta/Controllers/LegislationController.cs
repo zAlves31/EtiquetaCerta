@@ -38,8 +38,8 @@ public class LegislationController : ControllerBase
                 Id = Guid.NewGuid(),
                 Name = request.Name,
                 OfficialLanguage = request.OfficialLanguage,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
             };
 
             // Adicionar legislação ao banco de dados usando o repositório
