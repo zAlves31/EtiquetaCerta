@@ -35,9 +35,11 @@ public class SymbologyDto
     [JsonProperty("id")]
     public Guid Id { get; set; }
 
+
     [JsonProperty("translate")]
     public string? Translate { get; set; }
 }
+
 
 public class LegislationResponseDto
 {

@@ -30,5 +30,7 @@ namespace webApi.EtiquetaCerta.Repositories
             await _context.Legislations.AddAsync(legislation);
             await _context.SaveChangesAsync();
         }
+
+
     }
 }

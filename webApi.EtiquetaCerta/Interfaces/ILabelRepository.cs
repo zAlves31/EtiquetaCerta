@@ -1,4 +1,5 @@
 ﻿using webApi.EtiquetaCerta.Domains;
+using webApi.EtiquetaCerta.Dtos;
 
 namespace webApi.EtiquetaCerta.Interfaces
 {
@@ -7,5 +8,9 @@ namespace webApi.EtiquetaCerta.Interfaces
         Task AddAsync(Label label);
 
         Task<Legislation?> GetByIdAsync(Guid id);
+
+        Task<Label?> GetLabelWithLegislationByIdAsync(Guid id);
+
+        Task<List<LabelDto>> GetAllLabelsWithLegislationAndSymbologyAsync(); // Adicione este método
     }
 }

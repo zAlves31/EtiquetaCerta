@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen();
 
 // Configurar DbContext com a string de conexão do appsettings.json
 builder.Services.AddDbContext<EtiquetaCertaContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-MHF127S;database=EtiquetaCerta;user id=sa; Pwd=Senai@134;Trustservercertificate=true")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Server=DESKTOP-O595EET;database=EtiquetaCerta;user id=sa; Pwd=Senai@134;Trustservercertificate=true")));
 
 // Configurar Repositórios
 builder.Services.AddScoped<ILegislationRepository, LegislationRepository>();

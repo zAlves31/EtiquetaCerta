@@ -12,7 +12,7 @@ public partial class Legislation
     public string? OfficialLanguage { get; set; }
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-
+     
     [JsonIgnore]
     public virtual ICollection<Label> Labels { get; set; } = new List<Label>();
 
