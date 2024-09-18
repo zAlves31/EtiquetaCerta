@@ -3,7 +3,7 @@
 Este é um guia para rodar a API desenvolvida em .NET. Siga os passos abaixo para configurar o ambiente e iniciar a API.
 
 ## Vídeo do Projeto
-[![Video do Projeto]](https://www.youtube.com/watch?v=8PhEE5nUtrY)
+[Video do Projeto](https://www.youtube.com/watch?v=8PhEE5nUtrY)
 
 ## Pré-requisitos
 
